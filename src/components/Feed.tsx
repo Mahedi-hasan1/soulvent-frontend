@@ -1,46 +1,130 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import PostCard from "./PostCard";
 
+const USER_ID = "b8105df5-9a8f-4a68-ae5d-b6f7f86dbd61";
+const API_BASE = "https://soulvent-api.onrender.com";
+const LIMIT = 5;
+
+type Post = {
+  id: string;
+  content: string;
+  images?: string[];
+  author: string;
+};
+
 export default function Feed() {
-  const demoPosts = [
-    {
-      id: "1",
-      author: "Anonymous1",
-      content: "This is a demo post #1. Soulvent is awesome!",
-      images: ["/globe.svg"], // single image, no arrow
-    },
-    {
-      id: "2",
-      author: "Anonymous2",
-      content: "Express yourself freely! #Soulvent",
-      images: [], // no image, no arrow
-    },
-    {
-      id: "3",
-      author: "Anonymous3",
-      content: "No identity pressure here. Just vibes.",
-      images: ["/vercel.svg", "/window.svg", "/file.svg", "/globe.svg", "/next.svg", "/vercel.svg"],
-    },
-    {
-      id: "4",
-      author: "Anonymous4",
-      content: "Connect with your city anonymously.",
-      images: ["/window.svg", "/file.svg", "/globe.svg", "/next.svg", "/vercel.svg", "/window.svg"],
-    },
-    {
-      id: "5",
-      author: "Anonymous5",
-      content: "Trending local thoughts! #Soulvent",
-      images: ["/file.svg", "/globe.svg", "/next.svg", "/vercel.svg", "/window.svg", "/file.svg"],
-    },
-  ];
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [initialLoaded, setInitialLoaded] = useState(false);
+  const feedRef = useRef<HTMLDivElement | null>(null);
+
+  const fetchPosts = useCallback(async () => {
+    if (loading || !hasMore) return;
+    
+    setLoading(true);
+    
+    try {
+      const res = await fetch(`${API_BASE}/feed?user_id=${USER_ID}&limit=${LIMIT}`);
+      const data = await res.json();
+      
+      if (data && Array.isArray(data.posts)) {
+        const mappedPosts = data.posts.map((p: any) => ({
+          id: p.id,
+          content: p.content,
+          images: p.image_urls,
+          author: p.user?.username || "Anonymous",
+        }));
+
+        if (mappedPosts.length > 0) {
+          setPosts((prev) => [...prev, ...mappedPosts]);
+          // If we get less than LIMIT posts, assume no more posts available
+          setHasMore(mappedPosts.length === LIMIT);
+        } else {
+          setHasMore(false);
+        }
+      } else {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      setHasMore(false);
+    }
+    
+    setLoading(false);
+  }, [loading, hasMore]);
+
+  // Initial load
+  useEffect(() => {
+    if (!initialLoaded) {
+      fetchPosts();
+      setInitialLoaded(true);
+    }
+  }, [fetchPosts, initialLoaded]);
+
+  // Intersection Observer for detecting when last post is visible
+  useEffect(() => {
+    if (!hasMore || loading || !initialLoaded || posts.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const lastPost = entries[0];
+        if (lastPost.isIntersecting) {
+          fetchPosts();
+        }
+      },
+      {
+        root: feedRef.current,
+        rootMargin: '0px', // No buffer - trigger exactly when last post starts appearing
+        threshold: 0.01 // Trigger when just 1% of the last post is visible (very beginning)
+      }
+    );
+
+    // Get the last post element
+    const feedElement = feedRef.current;
+    if (feedElement) {
+      const lastPostElement = feedElement.children[posts.length - 1];
+      if (lastPostElement) {
+        observer.observe(lastPostElement as Element);
+      }
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasMore, loading, initialLoaded, posts.length, fetchPosts]);
 
   return (
-    <div className="space-y-6">
-      {demoPosts.map((post) => (
+    <div ref={feedRef} className="space-y-6 h-[80vh] overflow-y-auto pr-2">
+      {posts.map((post) => (
         <PostCard key={post.id} {...post} />
       ))}
+      
+      {loading && (
+        <div className="flex justify-center items-center py-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <span className="ml-2 text-muted-foreground">Loading more posts...</span>
+        </div>
+      )}
+      
+      {!hasMore && posts.length > 0 && (
+        <div className="text-center text-muted-foreground py-4">
+          No more posts to show
+        </div>
+      )}
+      
+      {!loading && posts.length === 0 && !initialLoaded && (
+        <div className="text-center text-muted-foreground py-8">
+          Loading posts...
+        </div>
+      )}
+
+      {!loading && posts.length === 0 && initialLoaded && (
+        <div className="text-center text-muted-foreground py-8">
+          No posts available
+        </div>
+      )}
     </div>
   );
 }

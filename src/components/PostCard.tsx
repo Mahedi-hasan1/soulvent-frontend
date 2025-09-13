@@ -34,7 +34,7 @@ export default function PostCard({ author, content, images = [] }: PostCardProps
           <img
             src={images[currentImg]}
             alt="Post"
-            className="w-96 h-96 object-cover rounded"
+            className="w-96 h-[32rem] object-cover rounded"
           />
           {hasMultiple && (
             <button

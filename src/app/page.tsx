@@ -13,7 +13,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-8">
           {/* Logo */}
           <div className="mb-8">
-            <span className="text-3xl font-bold">Soulvent</span>
+            <span className="text-3xl font-bold">SoulVent</span>
           </div>
           <Navigation />
         </div>
