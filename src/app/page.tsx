@@ -2,8 +2,6 @@ import React from "react";
 import Navigation from "../components/Navigation";
 import Feed from "../components/Feed";
 import Suggestions from "../components/Suggestions";
-import Image from "next/image";
-import styles from "./page.module.css";
 
 export default function Home() {
   return (

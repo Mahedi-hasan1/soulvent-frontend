@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 
 interface PostCardProps {
   author: string;
@@ -31,10 +32,14 @@ export default function PostCard({ author, content, images = [] }: PostCardProps
               ←
             </button>
           )}
-          <img
+          <Image
             src={images[currentImg]}
             alt="Post"
+            width={384}
+            height={512}
             className="w-96 h-[32rem] object-cover rounded"
+            priority={currentImg === 0}
+            unoptimized
           />
           {hasMultiple && (
             <button

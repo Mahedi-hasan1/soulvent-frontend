@@ -30,7 +30,7 @@ export default function Feed() {
       const data = await res.json();
       
       if (data && Array.isArray(data.posts)) {
-        const mappedPosts = data.posts.map((p: any) => ({
+        const mappedPosts = data.posts.map((p: { id: string; content: string; image_urls?: string[]; user?: { username?: string } }) => ({
           id: p.id,
           content: p.content,
           images: p.image_urls,
