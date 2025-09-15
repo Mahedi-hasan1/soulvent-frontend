@@ -3,10 +3,16 @@ import React, { useEffect, useState } from "react";
 import { API_BASE } from "../lib/api";
 import AdsSection from "./AdsSection";
 
+export interface SuggestedUser {
+  id: string;
+  username: string;
+  // add more fields if needed
+}
+
 export default function Suggestions() {
   const [user, setUser] = useState<{ username: string; city: string } | null>(null);
   const [loading, setLoading] = useState(true);
-  const [suggested, setSuggested] = useState<any[]>([]);
+  const [suggested, setSuggested] = useState<SuggestedUser[]>([]);
   const [following, setFollowing] = useState<{ [id: string]: boolean }>({});
 
   useEffect(() => {
@@ -14,14 +20,14 @@ export default function Suggestions() {
       if (typeof window === "undefined") { setLoading(false); return; }
       // Try localStorage first
       const userStr = localStorage.getItem("user");
-      let token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
       if (userStr) {
         try {
           const parsed = JSON.parse(userStr);
           if (parsed.username && parsed.city) {
             setUser({ username: parsed.username, city: parsed.city });
           }
-        } catch (e) { console.error("Failed to parse user from localStorage", e); }
+  } catch { /* ignore */ }
       }
       if (!token) { setLoading(false); return; }
       // Fetch user info if not in localStorage
@@ -37,7 +43,7 @@ export default function Suggestions() {
               localStorage.setItem("user", JSON.stringify({ username: data[0].username, city: data[0].city }));
             }
           }
-        } catch (e) { console.error("Failed to fetch user from API", e); }
+  } catch { /* ignore */ }
       }
       // Fetch suggested users
       try {
@@ -50,7 +56,7 @@ export default function Suggestions() {
         } else {
           setSuggested([]);
         }
-      } catch (e) {
+      } catch {
         setSuggested([]);
       }
       setLoading(false);

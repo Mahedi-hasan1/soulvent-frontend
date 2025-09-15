@@ -92,7 +92,7 @@ export default function AuthPage() {
             : data.message || "Authentication failed"
         );
       }
-    } catch (err) {
+    } catch {
       setError("Network error");
     }
     setLoading(false);
