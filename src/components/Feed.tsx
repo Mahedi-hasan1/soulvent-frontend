@@ -2,8 +2,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import PostCard from "./PostCard";
 
-const USER_ID = "b8105df5-9a8f-4a68-ae5d-b6f7f86dbd61";
-const API_BASE = "https://soulvent-api.onrender.com";
+import { API_BASE } from "../lib/api";
 const LIMIT = 5;
 
 type Post = {
@@ -20,13 +19,23 @@ export default function Feed() {
   const [initialLoaded, setInitialLoaded] = useState(false);
   const feedRef = useRef<HTMLDivElement | null>(null);
 
+  // Redirect to /auth if not logged in
+  React.useEffect(() => {
+    if (typeof window !== "undefined" && !localStorage.getItem("token")) {
+      window.location.replace("/auth");
+    }
+  }, []);
+
   const fetchPosts = useCallback(async () => {
     if (loading || !hasMore) return;
     
     setLoading(true);
     
     try {
-      const res = await fetch(`${API_BASE}/feed?user_id=${USER_ID}&limit=${LIMIT}`);
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const res = await fetch(`${API_BASE}/feed?limit=${LIMIT}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
       const data = await res.json();
       
       if (data && Array.isArray(data.posts)) {
