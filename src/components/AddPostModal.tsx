@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { compressImage, formatFileSize, processImageSelection } from "@/lib/utils";
+import { formatFileSize, processImageSelection } from "@/lib/utils";
 import { uploadToCloudinary, createPost } from "@/lib/api";
 
 interface AddPostModalProps {
@@ -77,7 +77,7 @@ export default function AddPostModal({ open, onClose }: AddPostModalProps) {
       } else {
         throw new Error('Failed to create post');
       }
-    } catch (error: any) {
+    } catch (error) {
       setNotification({ type: 'error', message: 'Post Creation Failed' });
     } finally {
       setIsUploading(false);

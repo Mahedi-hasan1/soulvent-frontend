@@ -19,7 +19,7 @@ export async function processImageSelection(
         files.map(file => compressImage(file, 300, 0.8))
       );
       setImages([...currentImages, ...compressedImages]);
-    } catch (error) {
+    } catch {
       setImages([...currentImages, ...files]);
     } finally {
       setIsCompressing(false);
