@@ -37,7 +37,7 @@ export default function PostCard({ author, content, images = [] }: PostCardProps
             alt="Post"
             width={384}
             height={512}
-            className="w-96 h-[32rem] object-cover rounded"
+            className="w-96 h-[32rem] object-cover rounded z-10"
             priority={currentImg === 0}
             unoptimized
           />

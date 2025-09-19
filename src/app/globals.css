@@ -1,3 +1,25 @@
+/* Notepad effect for textarea */
+.notepad-lines {
+  background-color: #f3f4f6;
+  background-image: repeating-linear-gradient(to bottom, #e5e7eb 0px, #e5e7eb 1px, transparent 1px, transparent 32px);
+  background-size: 100% 32px;
+}
+/* Custom scrollbar for modal */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #e5e7eb #f8fafc; /* thumb, track */
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  background: #f8fafc;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -107,18 +129,19 @@ a {
   display: none; /* Chrome, Safari, Opera */
 }
 
-.feed-scrollbar {
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #d1d5db #fff; /* thumb, track */
+
+.feed-scrollbar, .custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db #f8fafc;
 }
-.feed-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  background: #fff;
+.feed-scrollbar::-webkit-scrollbar, .custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  background: #f8fafc;
 }
-.feed-scrollbar::-webkit-scrollbar-thumb {
+.feed-scrollbar::-webkit-scrollbar-thumb, .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #d1d5db;
   border-radius: 6px;
 }
-.feed-scrollbar::-webkit-scrollbar-track {
-  background: #fff;
+.feed-scrollbar::-webkit-scrollbar-track, .custom-scrollbar::-webkit-scrollbar-track {
+  background: #f8fafc;
 }

@@ -118,9 +118,14 @@ export default function Feed() {
       )}
       
       {!hasMore && posts.length > 0 && (
+        <>
         <div className="text-center text-muted-foreground py-4">
-          No more posts to show
+          No more posts to show.
         </div>
+        <div className="text-center text-muted-foreground text-base">
+          You can follow user from suggestions to see their posts.
+        </div>
+        </>
       )}
       
       {!loading && posts.length === 0 && !initialLoaded && (
@@ -130,9 +135,14 @@ export default function Feed() {
       )}
 
       {!loading && posts.length === 0 && initialLoaded && (
+        <>
         <div className="text-center text-muted-foreground py-8">
           No posts available
         </div>
+        <div className="text-center text-muted-foreground text-base">
+          You can follow user from suggestions to see their posts.
+        </div>
+        </>
       )}
     </div>
   );
