@@ -103,18 +103,22 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-sky-300 via-sky-100 to-white px-[5vw]">
-      {/* Left Side */}
-      <div className="hidden md:flex flex-1 flex-col justify-center items-center p-12 bg-transparent">
-        <span className="text-5xl font-extrabold text-blue-600 mb-4">SoulVent</span>
-        <p className="text-lg text-blue-900 max-w-md text-center font-medium">
-          What’s in your mind right now? Say it. No one knows you. No one will ever know. Just let it go.
+    <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center bg-gradient-to-r from-sky-300 via-sky-100 to-white p-4 sm:p-6 lg:px-[5vw]">
+      {/* Left Side - Brand Section */}
+      <div className="w-full lg:flex-1 flex flex-col justify-center items-center p-4 sm:p-8 lg:p-12 bg-transparent mb-6 lg:mb-0">
+        <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-blue-600 mb-2 sm:mb-4 text-center">
+          SoulVent
+        </span>
+        <p className="text-sm sm:text-base lg:text-lg text-blue-900 max-w-sm lg:max-w-md text-center font-medium px-4 lg:px-0">
+          <span className="lg:hidden">Express yourself freely and anonymously</span>
+          <span className="hidden lg:inline">What's in your mind right now? Say it. No one knows you. No one will ever know. Just let it go.</span>
         </p>
       </div>
-      {/* Right Side */}
-      <div className="flex-1 flex flex-col justify-center items-center bg-transparent p-8 md:-ml-[5vw] w-full">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-10" style={{ width: '85%' }}>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
+      {/* Right Side - Form Section */}
+      <div className="w-full lg:flex-1 flex flex-col justify-center items-center bg-transparent p-4 sm:p-6 lg:p-8">
+        <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-10">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:gap-4">
             {mode === "signup" && (
               <>
                 <input
@@ -123,7 +127,7 @@ export default function AuthPage() {
                   placeholder="Username"
                   value={form.username}
                   onChange={handleChange}
-                  className="input bg-white border border-gray-300 text-black text-lg py-2 pl-4 rounded-lg"
+                  className="input bg-white border border-gray-300 text-black text-base sm:text-lg py-2 sm:py-3 pl-3 sm:pl-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   required
                 />
                 <input
@@ -132,7 +136,7 @@ export default function AuthPage() {
                   placeholder="Email"
                   value={form.email}
                   onChange={handleChange}
-                  className="input bg-white border border-gray-300 text-black text-lg py-2 pl-4 rounded-lg"
+                  className="input bg-white border border-gray-300 text-black text-base sm:text-lg py-2 sm:py-3 pl-3 sm:pl-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   required
                 />
                 <input
@@ -141,7 +145,7 @@ export default function AuthPage() {
                   placeholder="Password"
                   value={form.password}
                   onChange={handleChange}
-                  className="input bg-white border border-gray-300 text-black text-lg py-2 pl-4 rounded-lg"
+                  className="input bg-white border border-gray-300 text-black text-base sm:text-lg py-2 sm:py-3 pl-3 sm:pl-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   required
                 />
                 <input
@@ -150,14 +154,14 @@ export default function AuthPage() {
                   placeholder="City"
                   value={form.city}
                   onChange={handleChange}
-                  className="input bg-white border border-gray-300 text-black text-lg py-2 pl-4 rounded-lg"
+                  className="input bg-white border border-gray-300 text-black text-base sm:text-lg py-2 sm:py-3 pl-3 sm:pl-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   required
                 />
                 <select
                   name="gender"
                   value={form.gender}
                   onChange={handleChange}
-                  className="input bg-white border border-gray-300 text-black text-lg py-2 pl-4 rounded-lg"
+                  className="input bg-white border border-gray-300 text-black text-base sm:text-lg py-2 sm:py-3 pl-3 sm:pl-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   required
                 >
                   <option value="male">Male</option>
@@ -173,7 +177,7 @@ export default function AuthPage() {
                   placeholder="Username or Email"
                   value={form.username}
                   onChange={handleChange}
-                  className="input bg-white border border-gray-300 text-black text-lg py-2 pl-4 rounded-lg"
+                  className="input bg-white border border-gray-300 text-black text-base sm:text-lg py-2 sm:py-3 pl-3 sm:pl-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   required
                 />
                 <input
@@ -182,37 +186,46 @@ export default function AuthPage() {
                   placeholder="Password"
                   value={form.password}
                   onChange={handleChange}
-                  className="input bg-white border border-gray-300 text-black text-lg py-2 pl-4 rounded-lg"
+                  className="input bg-white border border-gray-300 text-black text-base sm:text-lg py-2 sm:py-3 pl-3 sm:pl-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   required
                 />
               </>
             )}
-            {error && <div className="text-red-500 text-sm text-center">{error}</div>}
-            <div className="flex flex-row items-center mt-2 gap-2">
+            
+            {error && (
+              <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded-lg border border-red-200">
+                {error}
+              </div>
+            )}
+            
+            <div className="flex flex-col sm:flex-row items-center mt-2 gap-2">
               <button
                 type="submit"
-                className="btn bg-blue-600 text-white hover:bg-blue-700 transition-all font-bold px-8 py-2 rounded-lg text-lg w-1/2 whitespace-nowrap text-center"
+                className="btn bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 transition-all font-bold px-6 sm:px-8 py-2 sm:py-3 rounded-lg text-base sm:text-lg w-full sm:w-auto whitespace-nowrap text-center disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 disabled={loading}
               >
                 {loading ? (mode === "login" ? "Signing in..." : "Signing up...") : mode === "login" ? "Sign In" : "Sign Up"}
               </button>
             </div>
-            <div className="flex flex-row justify-between items-center gap-2">
+            
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4 mt-2">
               <button
                 type="button"
-                className="text-blue-600 hover:underline text-base font-bold"
+                className="text-blue-600 hover:text-blue-700 hover:underline text-sm sm:text-base font-bold transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-1 py-1"
                 onClick={() => setMode(mode === "login" ? "signup" : "login")}
               >
-                {mode === "login" ? "Sign up" : "Sign in"}
+                {mode === "login" ? "Need an account? Sign up" : "Already have an account? Sign in"}
               </button>
-              <button
-                type="button"
-                className="text-blue-600 hover:underline text-base font-bold text-right"
-                onClick={() => alert("Forgot password functionality coming soon!")}
-                style={{ visibility: mode === "login" ? "visible" : "hidden" }}
-              >
-                Forgot password?
-              </button>
+              
+              {mode === "login" && (
+                <button
+                  type="button"
+                  className="text-blue-600 hover:text-blue-700 hover:underline text-sm sm:text-base font-bold text-center sm:text-right transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded px-1 py-1"
+                  onClick={() => alert("Forgot password functionality coming soon!")}
+                >
+                  Forgot password?
+                </button>
+              )}
             </div>
           </form>
         </div>
