@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import PostCard from "./PostCard";
+import Suggestions from "./Suggestions";
 
 import { API_BASE } from "../lib/api";
 const LIMIT = 5;
@@ -125,6 +126,11 @@ export default function Feed() {
         <div className="text-center text-muted-foreground text-base">
           You can follow user from suggestions to see their posts.
         </div>
+        <div className="xl:hidden max-w-md mx-auto">
+            <div className="rounded-lg bg-card p-4">
+              <Suggestions />
+            </div>
+          </div>
         </>
       )}
       
@@ -136,12 +142,17 @@ export default function Feed() {
 
       {!loading && posts.length === 0 && initialLoaded && (
         <>
-        <div className="text-center text-muted-foreground py-8">
-          No posts available
-        </div>
-        <div className="text-center text-muted-foreground text-base">
-          You can follow user from suggestions to see their posts.
-        </div>
+          <div className="text-center text-muted-foreground py-8">
+            No posts available
+          </div>
+          <div className="text-center text-muted-foreground text-base mb-4">
+            You can follow users from suggestions to see their posts.
+          </div>
+          <div className="xl:hidden max-w-md mx-auto">
+            <div className="rounded-lg bg-card p-4">
+              <Suggestions />
+            </div>
+          </div>
         </>
       )}
     </div>
