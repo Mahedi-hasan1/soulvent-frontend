@@ -111,7 +111,7 @@ export default function AuthPage() {
         </span>
         <p className="text-sm sm:text-base lg:text-lg text-blue-900 max-w-sm lg:max-w-md text-center font-medium px-4 lg:px-0">
           <span className="lg:hidden">Express yourself freely and anonymously</span>
-          <span className="hidden lg:inline">What's in your mind right now? Say it. No one knows you. No one will ever know. Just let it go.</span>
+    <span className="hidden lg:inline">What&apos;s in your mind right now? Say it. No one knows you. No one will ever know. Just let it go.</span>
         </p>
       </div>
 
