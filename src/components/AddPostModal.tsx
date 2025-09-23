@@ -77,8 +77,9 @@ export default function AddPostModal({ open, onClose }: AddPostModalProps) {
       } else {
         throw new Error('Failed to create post');
       }
-    } catch (error) {
-  setNotification({ type: 'error', message: 'Post Creation Failed' });
+    } catch (e) {
+      console.error(e);
+      setNotification({ type: 'error', message: 'Post Creation Failed' });
     } finally {
       setIsUploading(false);
     }

@@ -5,9 +5,13 @@ interface PostCardProps {
   author: string;
   content: string;
   images?: string[];
+  editable?: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  showAuthor?: boolean;
 }
 
-export default function PostCard({ author, content, images = [] }: PostCardProps) {
+export default function PostCard({ author, content, images = [], editable = false, onEdit, onDelete, showAuthor = true }: PostCardProps) {
   const [currentImg, setCurrentImg] = useState(0);
   const hasMultiple = images.length > 1;
 
@@ -20,7 +24,7 @@ export default function PostCard({ author, content, images = [] }: PostCardProps
 
   return (
     <div className="bg-card rounded-lg shadow p-6">
-      <div className="font-semibold mb-2">{author}</div>
+  {showAuthor && <div className="font-semibold mb-2">{author}</div>}
       <div className="mb-4">{content}</div>
       {images.length > 0 && (
         <div className="flex gap-2 mb-4 items-center justify-center relative">
@@ -51,11 +55,19 @@ export default function PostCard({ author, content, images = [] }: PostCardProps
           )}
         </div>
       )}
-      <div className="flex gap-6 items-center">
-        <button className="btn">Like</button>
-        <button className="btn">Dislike</button>
-        <button className="btn">Comments</button>
-        <button className="btn">Share</button>
+      <div className="flex items-center justify-between">
+        <div className="flex gap-6 items-center">
+          <button className="btn">Like</button>
+          <button className="btn">Dislike</button>
+          <button className="btn">Comments</button>
+          <button className="btn">Share</button>
+        </div>
+        {editable && (
+          <div className="flex gap-2">
+            <button className="btn" onClick={onEdit} disabled={!onEdit}>Edit</button>
+            <button className="btn" onClick={onDelete} disabled={!onDelete}>Delete</button>
+          </div>
+        )}
       </div>
     </div>
   );

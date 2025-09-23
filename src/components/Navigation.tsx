@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Search, MessageCircle, Users, UserPlus, User, LogOut, PlusSquare } from "lucide-react";
+import { Home, Search, MessageCircle, Users, UserPlus, User, LogOut, PlusSquare } from "lucide-react";
 import AddPostModal from "./AddPostModal";
 
+
 const navItems = [
+	{ label: "Main", icon: Home },
 	{ label: "Search", icon: Search },
 	{ label: "Add Post", icon: PlusSquare },
 	{ label: "Messages", icon: MessageCircle },
@@ -24,6 +26,17 @@ export default function Navigation() {
 			router.replace("/auth");
 		} else if (label === "Add Post") {
 			setShowAddPost(true);
+		} else if (label === "Main") {
+			router.push('/');
+		} else if (label === "Profile") {
+			// navigate to current user's profile
+			const uStr = localStorage.getItem('user');
+			if (uStr) {
+				try {
+					const u = JSON.parse(uStr);
+					if (u?.username) router.push(`/${u.username}`);
+				} catch {}
+			}
 		}
 		// Add navigation logic for other items if needed
 	};
